@@ -9,8 +9,9 @@ const setupDiv = document.getElementById("setup"); //statementDiv + class bubble
 const punchlineDiv = document.getElementById("punchline");//punchlineDiv+ add class bubble
 const punchlineBtn = document.getElementById("punchlineBtn");
 const newJokeBtn = document.getElementById("newJokeBtn"); //newstatementDiv
-let punchline; // this is puncline quote not punchline div 
-// let setup
+let punchline; // this is needed within 2 different function, we use let becos it content wil change
+// for const setupDiv it is constant, it is only the .innerHTML that is receiving content e.g line 49
+
 
 // Add an event listener for the punchline button. When clicked it should call a function called getPunchline
 // Create the getPunchline function. 
@@ -22,6 +23,7 @@ punchlineBtn.addEventListener('click', getPunchline);
 
 function getPunchline() {
     punchlineDiv.innerHTML = punchline; //store in a variable-punchline ch receives content from the api
+    //becos joke[0].punchline cannot be acessed form here it is inside another function 
     punchlineDiv.classList.add('bubble');
     punchlineBtn.classList.toggle('hidden');
     newJokeBtn.classList.toggle('hidden');
@@ -44,18 +46,28 @@ async function getJoke() {
 
     //1. Get the statement from the jokePromise and insert it into the setupDiv(placeholder)
     // which set the first statement as the placeholder when you first open the app 
-    setupDiv.innerHTML = joke[0].setup; //joke[0].statement
+    setupDiv.innerHTML = joke[0].setup; //joke[0].statement 
+    newJokeBtn.classList.toggle('hidden');
+    punchlineDiv.innerHTML = "";
+    punchlineDiv.classList.remove('bubble');
+    punchlineBtn.classList.toggle('hidden');
+    // the setup div is always there we dont hide its bubble-classList,
+    // we also add toggle-classlist to newjokebtn to hide & unhide   
+
 
     //2. Get the punchline-statement from the jokePromise and insert it into punchlineVariable, then punchlneDiv(new)
     // Create a global variable called punchline(see above) 
     // this will be updated with new punchline statement
     // Assign the current punchline to the punchline variable.
     //this will then be inserted into the punchlneDiv by calling the getPunchline() (see above)
-    punchline = joke[0].punchline; //Clear the punchlinediv & remove the "bubble" class 
-    punchlineDiv.innerHTML = "";
-    punchlineDiv.classList.remove('bubble');
-    punchlineBtn.classList.toggle('hidden');
-    newJokeBtn.classList.toggle('hidden');
+    punchline = joke[0].punchline; //Clear the punchlinediv & remove the "bubble" class
+    
+    // WHY NOT THIS - punchlineDiv.innerHTML = joke[0].punchline; 
+    // - becos this can only be acessed within this function & 
+    // we need this outside here e.g inside getPunchline() function
+    //NOTE:Also note that - setupDiv.innerHTML = joke[0].setup; was no store in a variable becos 
+    // it was only used within this function i.e  getJoke()
+
 }
 
 getJoke();
