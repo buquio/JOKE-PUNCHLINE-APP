@@ -11,10 +11,12 @@ h1 {
   position: relative;
 }
 h1::before {
+/* h1::after { */
   content: "";
   position: absolute;
   height: 6px;
   width: 100%;
+  border-radius: 50%;
   background: white;
   bottom: 4px;
   z-index: -1;
@@ -39,7 +41,7 @@ button {
   flex-direction: column;
 }
 
-.bubble {
+.bubble { /* statementDiv */
   display: inline-block;
   position: relative;
   padding: 30px 40px;
@@ -48,7 +50,7 @@ button {
   background: white;
   margin-bottom: 60px;
 }
-.bubble:before {
+.bubble:before { /* comma shape under the statementDiv */
   content: "";
   position: absolute;
   left: 0;
